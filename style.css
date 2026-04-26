@@ -472,6 +472,15 @@ article { display: none; }
     background: var(--bg-gradient-onyx);
     border-radius: 14px;
     box-shadow: var(--shadow1);
+    overflow: hidden; /* This clips the image corners to match the border-radius */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonials-avatar-box img {
+    object-fit: cover; /* Ensures the image fills the square without distortion */
+    aspect-ratio: 1 / 1;
 }
 
 .testimonials-text {
@@ -1041,7 +1050,8 @@ textarea.form-input {
 
     .form-btn ion-icon { font-size: 16px; }
     .form-btn:hover { background: var(--bg-gradient-yellow1); }
-        .form-btn::before { background: var(--bg-gradient-yellow2); }
+        /* FIX: was .form-btn::before — now correctly scoped to hover only */
+        .form-btn:hover::before { background: var(--bg-gradient-yellow2); }
 
     .form-btn:disabled {
         opacity: .7;
@@ -1178,7 +1188,10 @@ textarea.form-input {
         border-radius: 28px;
     }
 
-        .testimonials-avatar-box img { width: 80px; }
+        .testimonials-avatar-box img { 
+            width: 80px; 
+            height: 80px; 
+        }
 
     .testimonials-item-title {
         margin-bottom: 10px;
@@ -1217,7 +1230,6 @@ textarea.form-input {
     .modal-img-wrapper > img {
         display: block;
         position: relative;
-        /* flex-grow: 1; */
         width: 35px;
         top: 50px;
     }
@@ -1229,7 +1241,8 @@ textarea.form-input {
         scroll-padding-inline: 45px;
     }
 
-    .clients-item { min-width: calc(33..33% - 35px); }
+    /* FIX: was 33..33% (double dot typo) */
+    .clients-item { min-width: calc(33.33% - 35px); }
 
     .timeline-list { margin-left: 65px; }
 

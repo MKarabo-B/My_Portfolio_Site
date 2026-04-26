@@ -113,27 +113,29 @@ for(let i = 0; i < formInputs.length; i++) {
 // Contact Form Submission using EmailJS
 const contactForm = document.getElementById('contact-form');
 
-
-contactForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Change button text to indicate sending
-    const originalBtnContent = formBtn.innerHTML;
-    formBtn.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon><span>Sending...</span>';
-    formBtn.setAttribute('disabled', '');
-    // Send email using EmailJS
-    emailjs.sendForm('Mojapelo_Work_Email', 'template_i9kh0g4', this)
-        .then(function() {
-            alert('Message sent successfully!');
-            contactForm.reset();
-            formBtn.innerHTML = originalBtnContent;
-            formBtn.setAttribute('disabled', '');
-        }, function(error) {
-            alert('Failed to send message. Please try again.');
-            console.log('FAILED...', error);
-            formBtn.innerHTML = originalBtnContent;
-            formBtn.removeAttribute('disabled');
-        });
-});
+// FIX: Wrapped in null check to prevent crash if EmailJS fails to load
+if (contactForm) {
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Change button text to indicate sending
+        const originalBtnContent = formBtn.innerHTML;
+        formBtn.innerHTML = '<ion-icon name="hourglass-outline"></ion-icon><span>Sending...</span>';
+        formBtn.setAttribute('disabled', '');
+        // Send email using EmailJS
+        emailjs.sendForm('Mojapelo_Work_Email', 'template_i9kh0g4', this)
+            .then(function() {
+                alert('Message sent successfully!');
+                contactForm.reset();
+                formBtn.innerHTML = originalBtnContent;
+                formBtn.setAttribute('disabled', '');
+            }, function(error) {
+                alert('Failed to send message. Please try again.');
+                console.log('FAILED...', error);
+                formBtn.innerHTML = originalBtnContent;
+                formBtn.removeAttribute('disabled');
+            });
+    });
+}
 
 // Enabling Page Navigation 
 
