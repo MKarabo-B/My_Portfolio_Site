@@ -1277,7 +1277,7 @@ textarea.form-input {
     textarea.form-input { margin-bottom: 30px; }
 
     .form-btn {
-        --fs-6: 16px;
+        --fs6: 16px;
         padding: 16px 20px;
     }
 
