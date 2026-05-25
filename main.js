@@ -2,7 +2,7 @@
 
 //Opening or closing side bar
 
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
@@ -25,16 +25,15 @@ const testimonialsModalFunc = function () {
     overlay.classList.toggle('active');
 }
 
-for (let i = 0; i < testimonialsItem.length; i++) {
-    testimonialsItem[i].addEventListener('click', function () {
+testimonialsItem.forEach(item => {
+    item.addEventListener('click', function () {
         modalImg.src = this.querySelector('[data-testimonials-avatar]').src;
         modalImg.alt = this.querySelector('[data-testimonials-avatar]').alt;
         modalTitle.innerHTML = this.querySelector('[data-testimonials-title]').innerHTML;
         modalText.innerHTML = this.querySelector('[data-testimonials-text]').innerHTML;
-
         testimonialsModalFunc();
-    })
-}
+    });
+});
 
 //Activating close button in modal-testimonial
 
@@ -100,15 +99,11 @@ const form = document.querySelector('[data-form]');
 const formInputs = document.querySelectorAll('[data-form-input]');
 const formBtn = document.querySelector('[data-form-btn]');
 
-for(let i = 0; i < formInputs.length; i++) {
-    formInputs[i].addEventListener('input', function () {
-        if(form.checkValidity()) {
-            formBtn.removeAttribute('disabled');
-        } else { 
-            formBtn.setAttribute('disabled', '');
-        }
-    })
-}
+formInputs.forEach(input => {
+    input.addEventListener('input', () => {
+        formBtn.disabled = !form.checkValidity();
+    });
+});
 
 // Contact Form Submission using EmailJS
 const contactForm = document.getElementById('contact-form');
@@ -127,7 +122,7 @@ if (contactForm) {
                 alert('Message sent successfully!');
                 contactForm.reset();
                 formBtn.innerHTML = originalBtnContent;
-                formBtn.setAttribute('disabled', '');
+                formBtn.disabled = true;
             }, function(error) {
                 alert('Failed to send message. Please try again.');
                 console.log('FAILED...', error);
@@ -142,18 +137,18 @@ if (contactForm) {
 const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const pages = document.querySelectorAll('[data-page]');
 
-for(let i = 0; i < navigationLinks.length; i++) {
-    navigationLinks[i].addEventListener('click', function() {
-        
-        for(let j = 0; j < pages.length; j++) {
-            if(this.innerHTML.toLowerCase() == pages[j].dataset.page) {
-                pages[j].classList.add('active');
-                navigationLinks[j].classList.add('active');
-                window.scrollTo(0, 0);
-            } else {
-                pages[j].classList.remove('active');
-                navigationLinks[j].classList.remove('active');
-            }
-        }
+navigationLinks.forEach(navLink => {
+    navLink.addEventListener('click', function() {
+        const clickedPage = this.innerHTML.toLowerCase().trim();
+
+        pages.forEach(page => {
+            const isActive = clickedPage === page.dataset.page;
+            page.classList.toggle('active', isActive);
+            if(isActive) window.scrollTo(0, 0);
+        });
+
+        navigationLinks.forEach(link => {
+            link.classList.toggle('active', link === this);
+        });
     });
-}
+});
