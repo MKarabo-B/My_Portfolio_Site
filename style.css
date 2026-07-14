@@ -820,6 +820,12 @@ article { display: none; }
     margin-bottom: 15px;
 }
 
+.square-preview .project-img {
+    aspect-ratio: 1 / 1;
+    height: auto;
+}
+
+
     .project-img img {
         width: 100%;
         height: 100%;
