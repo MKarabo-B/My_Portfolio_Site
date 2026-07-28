@@ -1,5 +1,8 @@
 'use strict';
 
+// Initialize EmailJS (script is deferred, runs in order before this file)
+if (typeof emailjs !== 'undefined') emailjs.init("ja5OVwZptU0aMeAc5");
+
 //Opening or closing side bar
 
 const elementToggleFunc = (elem) => elem.classList.toggle("active");
