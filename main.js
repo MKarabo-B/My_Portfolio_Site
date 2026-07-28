@@ -132,7 +132,38 @@ if (contactForm) {
     });
 }
 
-// Enabling Page Navigation 
+// Image Lightbox (posters open solely in fullscreen view)
+
+const lightbox = document.querySelector('[data-lightbox-container]');
+const lightboxImg = document.querySelector('[data-lightbox-img]');
+const lightboxClose = document.querySelector('[data-lightbox-close]');
+const lightboxLinks = document.querySelectorAll('[data-lightbox]');
+
+lightboxLinks.forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const img = this.querySelector('img');
+        lightboxImg.src = this.getAttribute('href');
+        lightboxImg.alt = img ? img.alt : '';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+const closeLightbox = function () {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+};
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', function (event) {
+    if (event.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+});
+
+// Enabling Page Navigation
 
 const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const pages = document.querySelectorAll('[data-page]');
